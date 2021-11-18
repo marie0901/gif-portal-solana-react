@@ -22,16 +22,23 @@ const main = async () => {
   let account = await program.account.baseAccount.fetch(baseAccount.publicKey);
   console.log("👀 GIF Count", account.totalGifs.toString());
 
-  // Call add_gif!
-  await program.rpc.addGif({
-    accounts: {
-      baseAccount: baseAccount.publicKey,
-    },
-  });
+  // You'll need to now pass a GIF link to the function! You'll also need to pass in the user submitting the GIF!
+  await program.rpc.addGif(
+    "https://womantell.ru/wp-content/uploads/2020/08/kaskad-na-korotkie-31.jpg",
+    {
+      accounts: {
+        baseAccount: baseAccount.publicKey,
+        user: provider.wallet.publicKey,
+      },
+    }
+  );
 
-  // Get the account again to see what changed.
+  // Call the account.
   account = await program.account.baseAccount.fetch(baseAccount.publicKey);
   console.log("👀 GIF Count", account.totalGifs.toString());
+
+  // Access gif_list on the account!
+  console.log("👀 GIF List", account.gifList);
 };
 
 const runMain = async () => {

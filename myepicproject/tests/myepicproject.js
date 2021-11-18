@@ -24,7 +24,17 @@ const main = async () => {
 
   // You'll need to now pass a GIF link to the function! You'll also need to pass in the user submitting the GIF!
   await program.rpc.addGif(
-    "https://womantell.ru/wp-content/uploads/2020/08/kaskad-na-korotkie-31.jpg",
+    "https://u-ksyushi.ru/wp-content/uploads/2021/01/kaskad-bez-chelki-2.jpg",
+    {
+      accounts: {
+        baseAccount: baseAccount.publicKey,
+        user: provider.wallet.publicKey,
+      },
+    }
+  );
+
+  await program.rpc.voteGif(
+    "https://u-ksyushi.ru/wp-content/uploads/2021/01/kaskad-bez-chelki-2.jpg",
     {
       accounts: {
         baseAccount: baseAccount.publicKey,

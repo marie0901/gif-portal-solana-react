@@ -28,7 +28,39 @@ pub mod myepicproject {
     base_account.total_gifs += 1;
     Ok(())
   }
+
+  pub fn vote_gif(ctx: Context<AddGif>, gif_link: String) -> ProgramResult {
+
+
+
+
+
+    
+    let base_account = &mut ctx.accounts.base_account;
+    let user = &mut ctx.accounts.user;
+
+	// Find the Item and Update the Item struct.
+    let mut iter = base_account.gif_list.iter();
+   let item = iter.position(|i| i.gif_link == gif_link);
+   
+//    item.votes+=1;
+// base_account.gif_list[item].votes = 2;
+		
+match item {
+    Some(i) => {
+        base_account.gif_list[i].votes+=1;
+
+    }
+    None => {}
+};
+
+
+
+    Ok(())
+  }
 }
+
+
 
 #[derive(Accounts)]
 pub struct StartStuffOff<'info> {

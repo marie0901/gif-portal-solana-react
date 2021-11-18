@@ -103,6 +103,26 @@ const App = () => {
     }
   };
 
+  const voteGif = async (e) => {
+    try {
+      const provider = getProvider();
+      const program = new Program(idl, programID, provider);
+
+      console.log("Vote gif event target value", e.target.value);
+
+      await program.rpc.voteGif(e.target.value, {
+        accounts: {
+          baseAccount: baseAccount.publicKey,
+          user: provider.wallet.publicKey,
+        },
+      });
+      console.log("GIF sucesfully sent to program", e.target.value);
+
+      await getGifList();
+    } catch (error) {
+      console.log("Error voteGif: ", error);
+    }
+  };
   const onInputChange = (event) => {
     const { value } = event.target;
     setInputValue(value);
@@ -190,6 +210,15 @@ const App = () => {
               <div className="gif-item" key={index}>
                 <img src={item.gifLink} />
                 <div>{item.userAddress.toString()}</div>
+
+                <button
+                  type="submit"
+                  className="cta-button submit-gif-button"
+                  value={item.gifLink}
+                  onClick={voteGif}
+                >
+                  Vote
+                </button>
               </div>
             ))}
           </div>
@@ -205,17 +234,6 @@ const App = () => {
     window.addEventListener("load", onLoad);
     return () => window.removeEventListener("load", onLoad);
   }, []);
-
-  // useEffect(() => {
-  //   if (walletAddress) {
-  //     console.log("Fetching GIF list...");
-
-  //     // Call Solana program here.
-
-  //     // Set state
-  //     setGifList(TEST_GIFS);
-  //   }
-  // }, [walletAddress]);
 
   const getGifList = async () => {
     try {

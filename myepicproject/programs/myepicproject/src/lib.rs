@@ -20,6 +20,7 @@ pub mod myepicproject {
     let item = ItemStruct {
       gif_link: gif_link.to_string(),
       user_address: *user.to_account_info().key,
+      votes: 0,
     };
 		
 	// Add it to the gif_list vector.
@@ -52,6 +53,7 @@ pub struct AddGif<'info> {
 pub struct ItemStruct {
     pub gif_link: String,
     pub user_address: Pubkey,
+    pub votes: i128,
 }
 
 #[account]

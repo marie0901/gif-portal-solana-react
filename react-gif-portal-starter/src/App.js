@@ -116,7 +116,7 @@ const App = () => {
           user: provider.wallet.publicKey,
         },
       });
-      console.log("GIF sucesfully sent to program", e.target.value);
+      console.log(`GIF voted ${e.target.value}`);
 
       await getGifList();
     } catch (error) {
@@ -210,6 +210,7 @@ const App = () => {
               <div className="gif-item" key={index}>
                 <img src={item.gifLink} />
                 <div>{item.userAddress.toString()}</div>
+                <div>Votes: {item.votes.toString()}</div>
 
                 <button
                   type="submit"
@@ -243,7 +244,7 @@ const App = () => {
         baseAccount.publicKey
       );
 
-      console.log("Got the account", account);
+      console.log("account.gifList", account.gifList);
       setGifList(account.gifList);
     } catch (error) {
       console.log("Error in getGifList: ", error);
